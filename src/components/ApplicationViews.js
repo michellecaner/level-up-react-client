@@ -2,6 +2,7 @@ import React from "react"
 import { Route } from "react-router-dom"
 import { GameList } from "./game/GameList.js"
 import { EventList } from "./event/EventList.js"
+import { GameForm } from "./game/GameForm.js"
 
 export const ApplicationViews = () => {
     return <>
@@ -12,9 +13,13 @@ export const ApplicationViews = () => {
             <Route exact path="/">
                 <GameList />
             </Route>
-            <Route>
+            <Route exact path="/games/create">
+               element={<GameForm />} 
+            </Route>
+            <Route exact path="/events">
                 <EventList />
             </Route>
+         
         </main>
     </>
 }

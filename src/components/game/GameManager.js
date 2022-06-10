@@ -7,14 +7,14 @@ export const getGames = () => {
       .then(response => response.json())
 }
 
-export const createGame = (game) => {
+export const createGame = (newGame) => {
     return fetch("http://localhost:8000/games", {
         method: "POST",
         headers:{
             "Content-Type": "application/json",
             "Authorization": `Token ${localStorage.getItem("lu_token")}`
         },
-        body: JSON.stringify(game)
+        body: JSON.stringify(newGame)
     })
         .then(response => response.json())
   }
