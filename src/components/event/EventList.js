@@ -24,6 +24,11 @@ export const EventList = (props) => {
                     </section>
                 })
             }
+            <button className="btn btn-2 btn-sep icon-create"
+                onClick={() => {
+                    history.push({ pathname: "/events/new" })
+                }}
+            >Register New Event</button>
         </article>
     )
 }

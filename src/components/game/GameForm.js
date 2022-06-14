@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { useHistory } from 'react-router-dom'
-import { createGame, getGameTypes,  } from './GameManager.js'
+import { createGame, getGameTypes  } from './GameManager.js'
 
 
 export const GameForm = () => {
@@ -30,13 +30,14 @@ export const GameForm = () => {
     }, []);
 
     const changeGameState = (domEvent) => {
-        const newGame = { ...game}
+        const newGame = { ...currentGame}
         let selectedVal = domEvent.target.value
         if (domEvent.target.id.includes("Id")) {
             selectedVal = parseInt(selectedVal)
         }
-        newGame[domEvent.target.id] = selectedVal
+        newGame[domEvent.target.name] = selectedVal
         setCurrentGame(newGame)
+        console.log("you hit your change state")
     }
 
     return (
@@ -49,7 +50,7 @@ export const GameForm = () => {
                         <option value="0">Select a Game Type</option>
                         {gameTypes.map(t => (
                             <option key={t.id} value={t.id}>
-                                {t.type}
+                                {t.label}
                             </option>
                         ))}
                     </select>
@@ -59,7 +60,7 @@ export const GameForm = () => {
                 <div className="form-group">
                     <label htmlFor="title">Title: </label>
                     <input type="text" name="title" required autoFocus className="form-control"
-                        value={currentGame.title}
+                        defaultValue={currentGame.title}
                         onChange={changeGameState}
                     />
                 </div>
@@ -68,16 +69,25 @@ export const GameForm = () => {
                 <div className="form-group">
                     <label htmlFor="maker">Maker: </label>
                     <input type="text" name="maker" required autoFocus className="form-control"
-                        value={currentGame.maker}
+                        defaultValue={currentGame.maker}
                         onChange={changeGameState}
                     />
                 </div>
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="number_of_players">Number of Players </label>
-                    <input type="text" name="number_of_players" required autoFocus className="form-control"
-                        value={currentGame.numberOfPlayers}
+                    <label htmlFor="number_of_players">Number of Players: </label>
+                    <input type="text" name="numberOfPlayers" required autoFocus className="form-control"
+                        defaultValue={currentGame.numberOfPlayers}
+                        onChange={changeGameState}
+                    />
+                </div>
+            </fieldset>
+            <fieldset>
+                <div className="form-group">
+                    <label htmlFor="skill_level">Skill Level: </label>
+                    <input type="text" name="skillLevel" required autoFocus className="form-control"
+                        defaultValue={currentGame.skillLevel}
                         onChange={changeGameState}
                     />
                 </div>
@@ -88,12 +98,13 @@ export const GameForm = () => {
                     // Prevent form from being submitted
                     evt.preventDefault()
 
+                    // This is where the front end connects to the back end via naming conventions
                     const game = {
-                        maker: currentGame.maker,
+                        game_type: parseInt(currentGame.gameTypeId),
                         title: currentGame.title,
-                        numberOfPlayers: parseInt(currentGame.numberOfPlayers),
-                        skillLevel: parseInt(currentGame.skillLevel),
-                        gameTypeId: parseInt(currentGame.gameTypeId)
+                        maker: currentGame.maker,
+                        number_of_players: parseInt(currentGame.numberOfPlayers),
+                        skill_level: parseInt(currentGame.skillLevel)
                     }
 
                     // Send POST request to your API
