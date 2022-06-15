@@ -45,6 +45,7 @@ export const EventForm = () => {
         }
         newEvent[domEvent.target.name] = selectedVal
         setCurrentEvent(newEvent)
+        console.log("see what new event is", newEvent)
         console.log("you hit your change state")
     }
 
@@ -59,6 +60,7 @@ export const EventForm = () => {
                         {games.map(g => (
                             <option key={g.id} value={g.id}>
                                 {g.title}
+                        
                             </option>
                         ))}
                     </select>
@@ -94,10 +96,10 @@ export const EventForm = () => {
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="event">Event: </label>
-                    <select value={currentEvent.gameId} name="eventId" id="eventId" onChange={changeEventState} className="form-control">
+                    <select value={currentEvent.organizerId} name="organizerId" id="organizerId" onChange={changeEventState} className="form-control">
                         <option value="0">Select an Organizer: </option>
                         {events.map(e => (
-                            <option key={e.id} value={e.organizer.user.id}>
+                            <option key={e.id} value={e.organizer.id}>
                                 {e.organizer.user.first_name}
                             </option>
                         ))}
