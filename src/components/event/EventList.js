@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
-import { getEvents } from "./EventManager.js"
+import { getEvents, deleteEvent } from "./EventManager.js"
 
 export const EventList = (props) => {
     const [ events, setEvents ] = useState([])
@@ -10,6 +10,12 @@ export const EventList = (props) => {
     useEffect(() => {
         getEvents().then(data => setEvents(data))
     }, [])
+
+    const handleDeleteEvent = id => {
+        deleteEvent(id)
+            .then(() => getEvents().then
+                (setEvents))
+    };
 
     return (
         <article className="events">
@@ -21,6 +27,8 @@ export const EventList = (props) => {
                         <div className="event__date__time">
                           When: {event.date} at {event.time}</div>
                         <div className="event__organizer">Event organizer is {event.organizer.user.first_name}</div>
+                        <button className="event__delete__btn"
+                            onClick={() => handleDeleteEvent(event.id)}>Delete Event</button>
                     </section>
                 })
             }

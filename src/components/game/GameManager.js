@@ -50,3 +50,12 @@ export const getGameTypes = () => {
     })
         .then(response => response.json())
   }
+
+  export const deleteGame = (id) => {
+      return fetch(`${remoteURL}/games/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Authorization": `Token ${localStorage.getItem("lu_token")}`
+        }
+      })
+    }
