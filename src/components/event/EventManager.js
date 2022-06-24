@@ -1,3 +1,5 @@
+const remoteURL = "http://localhost:8000"
+
 export const getEvents = () => {
   return fetch("http://localhost:8000/events", {
     headers:{
@@ -17,5 +19,14 @@ export const createEvent = (newEvent) => {
         body: JSON.stringify(newEvent)
     })
         .then(response => response.json())
+  }
+
+  export const deleteEvent = (id) => {
+    return fetch(`${remoteURL}/events/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Token ${localStorage.getItem("lu_token")}`
+      }
+    })
   }
 
